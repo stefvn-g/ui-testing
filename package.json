@@ -1,0 +1,21 @@
+{
+  "name": "ui-testing",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:e2e": "playwright test tests/e2e",
+    "test:a11y": "playwright test tests/a11y",
+    "test:performance": "playwright test tests/performance",
+    "test:responsive": "playwright test tests/responsive",
+    "test:visual": "playwright test tests/visual-regression",
+    "test:update-snapshots": "playwright test tests/visual-regression --update-snapshots",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "@axe-core/playwright": "^4.9.0",
+    "axe-core": "^4.9.0",
+    "typescript": "^5.4.5"
+  }
+}
