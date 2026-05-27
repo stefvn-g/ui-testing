@@ -1,35 +1,27 @@
 name: Update Snapshots
-
 on:
   workflow_dispatch:
-
 permissions:
   contents: write
-
 jobs:
   update-snapshots:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
-
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-
       - name: Install dependencies
         run: npm ci
-
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-
       - name: Delete old snapshots
         run: rm -rf snapshots/
-
       - name: Generate new Linux snapshots
         run: npx playwright test tests/visual-regression/ --update-snapshots
-
       - name: Commit and push new snapshots
         run: |
           git config user.name "github-actions[bot]"
