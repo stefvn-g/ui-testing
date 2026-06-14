@@ -1,6 +1,6 @@
 # UI Testing - RentivoMK Web Application
 
-**Course:** Software Testing and Analysis 
+**Course:** Software Testing and Analysis   
 **Faculty:** CST, SEE University  
 **Semester:** 8th Semester (2025/2026)  
 
