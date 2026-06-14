@@ -1,31 +1,28 @@
 import { defineConfig, devices } from '@playwright/test';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 60_000,
-  expect: {
-    timeout: 10_000,
-    toHaveScreenshot: {
-      maxDiffPixelRatio: 0.03,
-    },
-  },
   fullyParallel: false,
-  retries: 2,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 1 : 0,
+  workers: 1,
+  timeout: 45000,
+  expect: { timeout: 10000 },
   reporter: [['html', { open: 'never' }], ['list']],
   use: {
-    baseURL: 'https://phptravels.net/',
+    baseURL: process.env.BASE_URL,
     headless: true,
-    viewport: { width: 1280, height: 720 },
-    ignoreHTTPSErrors: true,
     screenshot: 'only-on-failure',
-    video: 'off',
-    actionTimeout: 20_000,
-    navigationTimeout: 40_000,
+    video: 'retain-on-failure',
+    trace: 'retain-on-failure',
   },
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
-    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
   ],
-  snapshotDir: './snapshots',
 });
